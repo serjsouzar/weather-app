@@ -20,6 +20,7 @@ const WeatherApp = () => {
   const [weather, setWeather] = useState("Clear");
   const [wicon, setWicon] = useState(clear_icon);
 
+  
   const search = async () => {
     const element = document.getElementsByClassName("cityInput");
     if (element[0].value === "") {
@@ -34,25 +35,39 @@ const WeatherApp = () => {
         setCity(data.name);
         setTemp(data.main.temp);
         setWeather(data.weather.main);
-      });
 
+        setWicon(data.weather[0].icon)
+      });
+      
+      console.log(wicon)
     return response;
   };
 
   /**
-   *   weather === "Rain"
-      ? setWicon(rain_icon)
-      : weather === "Clear"
-      ? setWicon(clear_icon)
-      : weather === "Clouds"
-      ? setWicon(cloud_icon)
-      : weather === "Snow"
-      ? setWicon(snow_icon)
-      : weather === "Drizzle"
-      ? setWicon(drizzle_icon)
-      : "";
+   * weather === "Rain"
+        ? setWicon(rain_icon)
+        : weather === "Clear"
+        ? setWicon(clear_icon)
+        : weather === "Clouds"
+        ? setWicon(cloud_icon)
+        : weather === "Snow"
+        ? setWicon(snow_icon)
+        : weather === "Drizzle"
+        ? setWicon(drizzle_icon)
+        : "";
    */
-  
+
+    const sourceImage = wicon === "09d"
+    ? rain_icon
+    : wicon === "01d" 
+    ? clear_icon
+    : wicon === "02d" || "04d" 
+    ? cloud_icon
+    : wicon === "13d" 
+    ? snow_icon
+    : wicon === "10d" 
+    ? drizzle_icon
+    : "";
 
   return (
     <div className="container">
@@ -63,7 +78,7 @@ const WeatherApp = () => {
         </div>
       </div>
       <div className="weather-image">
-        <img src={wicon} alt="" />
+        <img src={sourceImage} alt="" />
       </div>
       <div className="weather-temp">{temp}°c</div>
       <div className="weather-location">{city}</div>
